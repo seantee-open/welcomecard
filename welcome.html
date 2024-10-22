@@ -1,9 +1,9 @@
-00<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to the Team!</title>
+    <title>Welcome to the Team eCard</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,68 +12,132 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background: rgb(2,0,36);
-            background: linear-gradient(103deg, rgba(2,0,36,1) 0%, rgba(0,0,0,1) 35%, rgba(154,173,183,1) 100%);
+            background: linear-gradient(135deg, #000000, #9aadb7); /* Company colors in gradient */
         }
-        .card {
-            background: url('https://seantee-open.github.io/welcomecard/welcomecardbg.png') no-repeat center center;
-            background-size: cover;
-            border: 1px solid #ffed00;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        .ecard-container {
+            perspective: 1000px;
+        }
+        .ecard {
+            width: 400px;
+            height: 250px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s;
+        }
+        .ecard.flipped {
+            transform: rotateY(180deg);
+        }
+        .ecard-side {
+            position: absolute;
             width: 100%;
-            max-width: 300px;
-            height: auto;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+        }
+        /* Front of the card */
+        .ecard-front {
+            background-color: #ffed00; /* Company color: Yellow */
+            text-align: center;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            color: black;
-            background-color: white; /* Ensure the card has a solid background over the gradient */
+            justify-content: center;
+            align-items: center;
         }
-        h1 {
-            color: black;
+        .ecard-front h1 {
+            color: #000000; /* Black company color */
+            font-size: 28px;
+            margin: 0;
+        }
+        .ecard-front img {
+            width: 120px;
+            margin-top: 15px;
+        }
+        /* Inside of the card */
+        .ecard-inside {
+            background-color: white;
+            text-align: center;
+            padding: 20px;
+            transform: rotateY(180deg);
+        }
+        .ecard-inside h1 {
             font-size: 24px;
+            color: #000000; /* Black company color */
+            margin: 10px 0;
         }
-        .message {
+        .ecard-inside p {
             font-size: 18px;
-            margin-top: 10px;
-            color: black;
+            color: #9aadb7; /* Light blue company color */
+            margin: 10px 0;
         }
-        .logo {
+        .ecard-inside img {
             width: 100px;
-            height: auto;
             margin-top: 20px;
-            align-self: center;
         }
-        /* Responsive media queries */
+        /* Adding transitions and animations */
+        .ecard-front, .ecard-inside {
+            transition: transform 0.6s ease-in-out, opacity 0.4s ease-in-out;
+        }
+        .ecard.flipped .ecard-front {
+            opacity: 0; /* Smoothly hides the front when flipped */
+        }
+        .ecard.flipped .ecard-inside {
+            opacity: 1;
+        }
+        /* Responsive design */
         @media (max-width: 768px) {
-            .card {
-                max-width: 300px;
+            .ecard {
+                width: 300px;
+                height: 200px;
             }
-            .message {
-                font-size: 16px;
+            .ecard-front h1 {
+                font-size: 22px;
             }
         }
         @media (max-width: 480px) {
-            .card {
-                max-width: 90%;
+            .ecard {
+                width: 90%;
+                height: auto;
             }
-            .message {
-                font-size: 14px;
+            .ecard-front h1 {
+                font-size: 20px;
+            }
+            .ecard-inside h1 {
+                font-size: 20px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1 id="welcomeMessage">Welcome to the team, [Employee Name]!</h1>
-        <p class="message" id="onboardMessage">We're happy to have you onboard!</p>
-        <img src="https://avidityblobstorage.blob.core.windows.net/logos/Avidity_logo_S%20-%20transparent%20background.png" alt="Company Logo" class="logo">
+    <div class="ecard-container">
+        <div class="ecard" id="ecard">
+            <!-- Front of the card -->
+            <div class="ecard-side ecard-front">
+                <h1>Welcome!</h1>
+                <img src="https://avidityblobstorage.blob.core.windows.net/logos/Avidity_logo_S%20-%20transparent%20background.png" alt="Company Logo">
+            </div>
+            <!-- Inside of the card -->
+            <div class="ecard-side ecard-inside">
+                <h1 id="welcomeMessage">Welcome to the team, [Employee Name]!</h1>
+                <p>We're happy to have you onboard!</p>
+                <img src="https://avidityblobstorage.blob.core.windows.net/logos/Avidity_logo_S%20-%20transparent%20background.png" alt="Company Logo">
+            </div>
+        </div>
     </div>
 
+    <!-- Sound effect -->
+    <audio id="flipSound" src="https://www.fesliyanstudios.com/play-mp3/387"></audio>
+
     <script>
+        const ecard = document.getElementById('ecard');
+        const flipSound = document.getElementById('flipSound');
+
+        // Function to toggle the card flip and play sound
+        ecard.addEventListener('click', function() {
+            this.classList.toggle('flipped');
+            flipSound.play(); // Play sound when the card is clicked
+        });
+
         // Function to get URL parameter by name
         function getParameterByName(name) {
             const urlParams = new URLSearchParams(window.location.search);
