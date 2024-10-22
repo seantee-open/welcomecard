@@ -22,12 +22,13 @@
             padding: 20px;
             text-align: center;
             box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            height: 400px;
+            width: 100%;
+            max-width: 400px; /* Limits the card size on larger screens */
+            height: auto;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            color: white; /* Ensure text is readable on background */
+            justify-content: space-between; /* Spaces out content */
+            color: white;
         }
         h1 {
             color: white;
@@ -41,13 +42,42 @@
             font-size: 18px;
             color: white;
         }
+        .logo {
+            width: 100px;
+            height: auto;
+            margin-top: 20px;
+        }
+        /* Responsive media queries */
+        @media (max-width: 768px) {
+            .card {
+                max-width: 300px; /* Smaller card on tablets */
+            }
+            .name {
+                font-size: 20px;
+            }
+            .message {
+                font-size: 16px;
+            }
+        }
+        @media (max-width: 480px) {
+            .card {
+                max-width: 90%; /* Full width on smaller mobile devices */
+            }
+            .name {
+                font-size: 18px;
+            }
+            .message {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="card">
-        <h1>Welcome to the Team!</h1>
-        <p class="message">We're excited to have you onboard,</p>
+        <h1>Welcome to the team,</h1>
         <p class="name" id="employeeName">[Employee Name]</p>
+	<p class="message">We're excited to have you onboard.</p>
+        <img src="https://yourcompanylogo.com/logo.png" alt="Company Logo" class="logo">
     </div>
 
     <script>
@@ -62,9 +92,9 @@
 
         // If a name is provided, update the text content
         if (employeeName) {
-            document.getElementById('employeeName').textContent = employeeName;
+            document.getElementById('employeeName').textContent = employeeName + '!';
         } else {
-            document.getElementById('employeeName').textContent = 'New Employee';
+            document.getElementById('employeeName').textContent = 'New Employee!';
         }
     </script>
 </body>
