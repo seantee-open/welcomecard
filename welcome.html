@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to the Team!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f7f7f7;
+        }
+        .card {
+            background: url('https://yourimageurl.com/background.jpg') no-repeat center center;
+            background-size: cover;
+            border: 1px solid #dddddd;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: white; /* Ensure text is readable on background */
+        }
+        h1 {
+            color: white;
+        }
+        .name {
+            font-size: 24px;
+            color: #FFD700; /* Gold color for the name */
+            margin-top: 10px;
+        }
+        .message {
+            font-size: 18px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Welcome to the Team!</h1>
+        <p class="message">We're excited to have you onboard,</p>
+        <p class="name" id="employeeName">[Employee Name]</p>
+    </div>
+
+    <script>
+        // Function to get URL parameter by name
+        function getParameterByName(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Get the 'name' parameter from the URL
+        const employeeName = getParameterByName('name');
+
+        // If a name is provided, update the text content
+        if (employeeName) {
+            document.getElementById('employeeName').textContent = employeeName;
+        } else {
+            document.getElementById('employeeName').textContent = 'New Employee';
+        }
+    </script>
+</body>
+</html>
